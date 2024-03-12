@@ -5,8 +5,8 @@ import { reactive } from 'vue';
 const estado = reactive({
   valorA: 0,
   valorB: 0,
-  filtro: 'Somar',
-  tarefas: [
+  filtro: '+',
+  tarefa: [
     {
       titulo: 'Somar',
       finalizada: true,
@@ -45,23 +45,29 @@ function tarefaDividir() {
   return parseInt(valorA) / parseInt(valorB);
 }
 
-const getOperadores = () => {
-  const { filtro } = estado;
 
+
+const getOperadores = (filtro) => {
+  
   switch (filtro) {
-    case 'Somar':
+    case '+':
       return tarefaSomar();
-    case 'Subtrair':
+      
+    case '-':
       return tarefaSubtrair();
-    case 'Multiplicar':
+      
+    case '*':
       return tarefaMultiplicar();
-    case 'Dividir':
+      
+    case '/':
       return tarefaDividir();
+      
     default:
-      return estado.tarefas
+      return estado.tarefa
   }
 
 }
+
 
 </script>
 
@@ -73,8 +79,8 @@ const getOperadores = () => {
     <form>
       <div class="row">
         <div class="col">
-          <input @keyup="evento => estado.valorA = evento.target.value" type="number" placeholder="Digite aqui o Valor A"
-            class="form-control" id="valorA">
+          <input @keyup="evento => estado.valorA = evento.target.value" type="number"
+            placeholder="Digite aqui o Valor A" class="form-control" id="valorA">
         </div>
         <select @change="evento => estado.filtro = evento.target.value" class="col-md-2 rounded-3">
           <option value="+">Somar</option>
@@ -84,20 +90,19 @@ const getOperadores = () => {
 
         </select>
         <div class="col">
-          <input @keyup="evento => estado.valorB = evento.target.value" type="number" placeholder="Digite aqui o Valor B"
-            class="form-control" id="valorB">
+          <input @keyup="evento => estado.valorB = evento.target.value" type="number"
+            placeholder="Digite aqui o Valor B" class="form-control" id="valorB">
         </div>
 
         <div class="row d-flex justify-content-center">
           <div class="col-md-3">
-            <h3 class="bg-light mt-3 border border-secondary rounded-3">{{ getOperadores () }}</h3>
-            
+            <h3 class="bg-light mt-3 border border-secondary rounded-3"> {{ getOperadores(estado.filtro) }} </h3>
+
           </div>
         </div>
 
       </div>
     </form>
-
   </div>
 </template>
 
